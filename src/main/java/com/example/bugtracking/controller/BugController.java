@@ -23,8 +23,18 @@ public class BugController
 	@PostMapping()
 	public ResponseEntity<?> addBug(@RequestBody BugDto bugDto)
 	{
-		BugDto result=bugService.addBug(bugDto);
-		return ResponseEntity.ok(result);
+		BugDto result;
+		try
+		{
+			result = bugService.addBug(bugDto);
+			return ResponseEntity.ok(result);
+		}
+		catch (Exception e) 
+		{
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		
 	}
 	
 	@GetMapping

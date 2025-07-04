@@ -25,7 +25,7 @@ public class BugService
 	@Autowired
 	private BugRepository bugRepository;
 	
-	public BugDto addBug(BugDto bugDto) 
+	public BugDto addBug(BugDto bugDto) throws Exception
 	{
 		Bug b=new Bug();
 		b.setBugId(bugDto.getBugId());
@@ -35,14 +35,14 @@ public class BugService
 	
 		User user = userRepository.findById(bugDto.getAssignTo()).orElseThrow(() -> new RuntimeException("User not found"));
         Project project = projectRepository.findById(bugDto.getProjectId()).orElseThrow(() -> new RuntimeException("Project not found"));
-
+  
         b.setAssignedTo(user);
         b.setProject(project);
         
         Bug saved = bugRepository.save(b);
 
        
-        BugDto result = new BugDto();
+        BugDto result = new BugDto();	
         result.setBugId(saved.getBugId());
         result.setBugTitle(saved.getBugTitle());
         result.setStatus(saved.getStatus());
